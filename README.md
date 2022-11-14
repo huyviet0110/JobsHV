@@ -24,7 +24,7 @@
 
 #### C. Job seekers
 - Job Search (company, location, salary, location, language, qualifications, degree requirements - certificates, quantity)
-- Đăng CV
+- Upload CV
 - View job listings (can be pinned and rest randomly arranged)
 - Report violations: companies, individuals (scam, spam, can't be contacted, wrong job posting information)
 
