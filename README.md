@@ -1,32 +1,32 @@
 # JobsHV
 
-## _Web App Tuyển dụng việc làm_
+## _Website about recruitment, job search_
 
-### Đối tượng sử dụng
+### All Actors
 
-- Quản trị viên
-- Nhà tuyển dụng
-- Ứng viên
+- Admin
+- HR
+- Job seekers
 
-### Chức năng từng đối tượng
+### Features
 
-#### A. Quản trị viên
-- Quản lý trang thông tin: banner, giới thiệu, ...
-- Quản lý người dùng
-- Quản lý file: JD, CV
-- Quản lý bài đăng, công việc
-- Quản lý báo cáo
+#### A. Admin
+- Manage recruitment files, job application files
+- Manage posts, tasks
+- Manage reports
+- Manage information pages
+- User management
 
-#### B. Nhà tuyển dụng
-- Quản lý bài tuyển dụng
-- Tìm kiếm CV
-- Chỉnh sửa thông tin cá nhân (thuộc công ty nào, thông tin liên hệ)
+#### B. HR
+- Manage recruitment posts
+- Edit personal information
+- Search CV
 
-#### C. Ứng viên
-- Tìm kiếm công việc (công ty, vị trí, mức lương, địa điểm, ngôn ngữ, trình độ, yêu cầu bằng cấp - chứng chỉ, số lượng)
+#### C. Job seekers
+- Job Search (company, location, salary, location, language, qualifications, degree requirements - certificates, quantity)
 - Đăng CV
-- Xem danh sách công việc (có thể ghim và còn lại sắp xếp ngẫu nhiên)
-- Báo cáo vi phạm: công ty,  cá nhân (lừa đảo, spam, không liên hệ được, thông tin bài tuyển dụng sai)
+- View job listings (can be pinned and rest randomly arranged)
+- Report violations: companies, individuals (scam, spam, can't be contacted, wrong job posting information)
 
 ## License
 
