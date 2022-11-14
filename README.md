@@ -2,7 +2,7 @@
 
 ## _Website about recruitment, job search_
 
-### All Actors
+### Actors
 
 - Admin
 - HR
