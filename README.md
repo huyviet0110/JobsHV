@@ -6,11 +6,11 @@
 
 - Admin
 - HR
-- Job seekers
+- Applicant
 
 ### Features
 
-#### A. Job seekers
+#### A. Applicant
 - Job Search (company, location, salary, location, language, qualifications, degree requirements - certificates, quantity)
 - Upload CV
 - View job listings (can be pinned and rest randomly arranged)
