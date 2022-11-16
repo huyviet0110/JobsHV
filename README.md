@@ -5,8 +5,8 @@
 ### Actors
 
 - Admin
-- HR
 - Applicant
+- HR
 
 ### Features
 
