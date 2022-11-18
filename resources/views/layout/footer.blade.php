@@ -2,7 +2,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                footer
+                2022
+                @if(date('Y') > 2022)
+                    - {{ date('Y') }}
+                @endif
+                | {{ config('app.name') }}
             </div>
             <div class="col-md-6">
                 <div class="text-md-right footer-links d-none d-md-block">

@@ -190,18 +190,6 @@
                         </div>
                     </div>
                 </a>
-
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <div class="media">
-                        <img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-5.jpg"
-                             alt="Generic placeholder image" height="32">
-                        <div class="media-body">
-                            <h5 class="m-0 font-14">Jacob Deo</h5>
-                            <span class="font-12 mb-0">Developer</span>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
     </div>

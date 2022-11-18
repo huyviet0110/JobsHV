@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JobsHV</title>
+    <title>{{ $title }} | {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -17,26 +17,29 @@
       data-layout-config="{&quot;leftSideBarTheme&quot;:&quot;dark&quot;,&quot;layoutBoxed&quot;:false, &quot;leftSidebarCondensed&quot;:false, &quot;leftSidebarScrollable&quot;:false,&quot;darkMode&quot;:false, &quot;showRightSidebarOnStart&quot;: true}"
       data-leftbar-theme="dark">
 <!-- Begin page -->
-@extends('layout.sidebar')
-
 <div class="wrapper mm-active">
-    @extends('layout.header')
+    @include('layout.sidebar')
 
     <div class="content-page">
         <div class="content">
-            @extends('layout.header')
+
+            @include('layout.header')
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
-                        @yield('content')
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">{{ $title ?? '' }}</h4>
+                        </div>
                     </div>
                 </div>
+
+                @yield('content')
             </div>
         </div>
-    </div>
 
-    @extends('layout.footer')
+        @include('layout.footer')
+    </div>
 </div>
 <!-- END wrapper -->
 
