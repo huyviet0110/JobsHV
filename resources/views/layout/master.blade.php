@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ $title }} | {{ config('app.name') }}</title>
+    <title>{{ $title ?? '' }} | {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -45,6 +45,7 @@
 
 <script src="{{ asset('js/app.min.js') }}"></script>
 <script src="{{ asset('js/vendor.min.js') }}"></script>
+<script src="{{ asset('js/helper.js') }}"></script>
 
 @stack('js')
 
