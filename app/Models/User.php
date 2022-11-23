@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\UserRoleEnum;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\User
@@ -52,6 +55,7 @@ class User extends Model implements AuthenticatableContract
 {
     use Authenticatable;
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -59,4 +63,19 @@ class User extends Model implements AuthenticatableContract
         'email',
         'password',
     ];
+
+    public function getRoleNameAttribute(): string
+    {
+        return ucfirst(strtolower(UserRoleEnum::getKey($this->role)));
+    }
+
+    public function getGenderNameAttribute(): string
+    {
+        return ($this->gender === 0) ? 'Male' : 'Female';
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

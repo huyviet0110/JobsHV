@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Nette\Utils\Paginator;
 
 class UserController extends Controller
 {
-    public object $model;
-    public string $table;
+    private object $model;
+    private string $table;
 
     public function __construct()
     {
@@ -20,12 +23,62 @@ class UserController extends Controller
         View::share('title', ucwords($this->table));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->model->paginate(7);
+        $selectedRole    = $request->get('role');
+        $selectedCity    = $request->get('city');
+        $selectedCompany = $request->get('company');
+
+        $query = $this->model->clone()
+            ->with('company:id,name')
+            ->latest();
+
+        if (!is_null($selectedRole)) {
+            $query->where('role', $selectedRole);
+        }
+        if (!is_null($selectedCity)) {
+            $query->where('city', $selectedCity);
+        }
+        if (!is_null($selectedCompany)) {
+            $query->whereHas('company', function ($q) use ($selectedCompany) {
+                return $q->where('id', $selectedCompany);
+            });
+        }
+
+        $data = $query->paginate(7);
+
+        $roles     = UserRoleEnum::asArray();
+        $cities    = $this->model->clone()
+            ->distinct()
+            ->limit(10)
+            ->pluck('city');
+        $companies = Company::query()
+            ->get([
+                'id',
+                'name',
+            ]);
 
         return view("admin.$this->table.index", [
-            'data' => $data,
+            'data'            => $data,
+            'roles'           => $roles,
+            'cities'          => $cities,
+            'companies'       => $companies,
+            'selectedRole'    => $selectedRole,
+            'selectedCity'    => $selectedCity,
+            'selectedCompany' => $selectedCompany,
+            'table'           => $this->table,
         ]);
+    }
+
+    public function destroy($userID)
+    {
+        User::destroy($userID);
+
+        return redirect()->route("admin.$this->table.index");
+    }
+
+    public function show()
+    {
+        return false;
     }
 }
