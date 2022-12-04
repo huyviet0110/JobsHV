@@ -8,8 +8,10 @@ use App\Models\Company;
 use App\Models\File;
 use App\Models\Language;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Throwable;
 
 class PostImport implements ToArray, WithHeadingRow
 {
@@ -26,13 +28,16 @@ class PostImport implements ToArray, WithHeadingRow
                     $companyId = Company::firstOrCreate([
                         'name' => $companyName,
                     ], [
-                        'city'    => $city,
                         'country' => 'Vietnam',
                     ])->id;
                 } else {
                     $companyId = null;
                 }
 
+                if(!empty($city)){
+                    $city = Str::replace('HN', 'Hà Nội', $city);
+                    $city = Str::replace('HCM', 'Hồ Chí Minh', $city);
+                }
 
                 $post = Post::create([
                     'job_title'  => $language,
@@ -54,8 +59,8 @@ class PostImport implements ToArray, WithHeadingRow
                     'type'    => FileTypeEnum::JD,
                 ]);
             }
-        } catch (\Throwable $e) {
-            dd($each);
+        } catch (Throwable $e) {
+
         }
     }
 }
