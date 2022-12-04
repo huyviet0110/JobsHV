@@ -1,12 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', static function () {
-    return view('layout.master');
-})->name('welcome');
+Route::get('/', [UserController::class, 'index'])->name('index');
 
 Route::group([
     'prefix' => 'users',
@@ -25,4 +24,11 @@ Route::group([
     Route::get('/create', [PostController::class, 'create'])->name('create');
     Route::post('/create', [PostController::class, 'store'])->name('store');
     Route::post('/import-csv', [PostController::class, 'importCsv'])->name('import_csv');
+});
+
+Route::group([
+    'prefix' => 'companies',
+    'as'     => 'companies.',
+], static function () {
+    Route::post('/create', [CompanyController::class, 'store'])->name('store');
 });

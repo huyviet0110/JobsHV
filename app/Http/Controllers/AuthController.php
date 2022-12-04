@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\UserRoleEnum;
 use App\Http\Requests\Auth\RegisteringRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,18 +23,19 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function callback($provider)
+    public function callback($provider): RedirectResponse
     {
         $data = Socialite::driver($provider)->user();
 
         $checkExists = true;
-        $user = User::query()
-                    ->where('email', $data->getEmail())
-                    ->first();
+        $user        = User::query()
+            ->where('email', $data->getEmail())
+            ->first();
 
         if (is_null($user)) {
             $user        = new User();
             $user->email = $data->getEmail();
+            $user->role  = UserRoleEnum::ADMIN;
             $checkExists = false;
         }
 
@@ -43,40 +45,48 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        $role = getRoleByKey($user->role);
         if ($checkExists) {
-            $role = strtolower(UserRoleEnum::getKey($user->role));
 
-            return redirect()->route("$role.welcome");
+            return redirect()->route("$role.index");
         }
 
-        return redirect()->route('register');
+        return redirect()->route("$role.index");
+//        return redirect()->route('register');
     }
 
-    public function registering(RegisteringRequest $request)
+//    public function registering(RegisteringRequest $request): RedirectResponse
+//    {
+//        $password = Hash::make($request->get('password'));
+//        $role     = (int) $request->get('role');
+//
+//        if (auth()->check()) {
+//            User::query()
+//                ->where('id', auth()->user()->id)
+//                ->update([
+//                    'password' => $password,
+//                    'role'     => $role,
+//                ]);
+//        } else {
+//            $user = User::query()->Create([
+//                'email'    => $request->get('email'),
+//                'name'     => $request->get('name'),
+//                'password' => $password,
+//                'role'     => $role,
+//            ]);
+//
+//            Auth::login($user);
+//        }
+//
+//        $role = strtolower(UserRoleEnum::getKey($role));
+//
+//        return redirect()->route("$role.welcome");
+//    }
+
+    public function logout(): RedirectResponse
     {
-        $password = Hash::make($request->get('password'));
-        $role     = (int)$request->get('role');
+        Auth::logout();
 
-        if (auth()->check()) {
-            User::query()
-                ->where('id', auth()->user()->id)
-                ->update([
-                    'password' => $password,
-                    'role'     => $role,
-                ]);
-        } else {
-            $user = User::query()->Create([
-                'email'    => $request->get('email'),
-                'name'     => $request->get('name'),
-                'password' => $password,
-                'role'     => $role,
-            ]);
-
-            Auth::login($user);
-        }
-
-        $role = strtolower(UserRoleEnum::getKey($role));
-
-        return redirect()->route("$role.welcome");
+        return redirect()->route('login');
     }
 }

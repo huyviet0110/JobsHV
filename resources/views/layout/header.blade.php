@@ -15,16 +15,14 @@
         <li class="dropdown notification-list topbar-dropdown">
             <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
                aria-haspopup="false" aria-expanded="false">
-                <img src="assets/images/flags/us.jpg" alt="user-image" class="mr-0 mr-sm-1" height="12">
-                <span class="align-middle d-none d-sm-inline-block">English</span> <i
-                    class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
+                <img src="" alt="user-image" class="mr-0 mr-sm-1" height="12">
+                <span class="align-middle d-none d-sm-inline-block">English</span>
+                <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu">
-
-                <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12">
-                    <span class="align-middle">German</span>
+                    <img src="" alt="user-image" class="mr-1" height="12">
+                    <span class="align-middle">Vietnamese</span>
                 </a>
             </div>
         </li>
@@ -95,7 +93,7 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#"
                role="button" aria-haspopup="false" aria-expanded="false">
                                     <span class="account-user-avatar">
-                                        <img src="assets/images/users/avatar-1.jpg" alt="user-image"
+                                        <img src="" alt="user-image"
                                              class="rounded-circle">
                                     </span>
                 <span>
@@ -182,7 +180,7 @@
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <div class="media">
-                        <img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-2.jpg"
+                        <img class="d-flex mr-2 rounded-circle" src=""
                              alt="Generic placeholder image" height="32">
                         <div class="media-body">
                             <h5 class="m-0 font-14">Erwin Brown</h5>

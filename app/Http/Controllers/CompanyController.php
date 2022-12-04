@@ -25,4 +25,13 @@ class CompanyController extends Controller
 
         return $this->successResponse($data);
     }
+
+    public function check(Request $request)
+    {
+        $data = $this->model
+            ->where('name', $request->get('company'))
+            ->exists();
+
+        return $this->successResponse($data);
+    }
 }
