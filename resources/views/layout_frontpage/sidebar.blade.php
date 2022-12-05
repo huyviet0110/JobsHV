@@ -1,7 +1,7 @@
 <div class="col-md-3">
     <div class="card card-refine card-plain">
         <div class="card-content">
-            <form>
+            <form action="{{ route('applicant.index') }}">
                 <h4 class="card-title">
                     Refine
                     <button class="btn btn-default btn-fab btn-fab-mini btn-simple pull-right" rel="tooltip" title=""
@@ -19,9 +19,21 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
                          aria-labelledby="headingOne">
+                        <input type="hidden" name="min_salary" value="{{ $minSalary }}" id="input-min-salary">
+                        <input type="hidden" name="max_salary" value="{{ $maxSalary }}" id="input-max-salary">
                         <div class="panel-body panel-refine">
-                            <span id="price-left" class="price-left pull-left" data-currency="€">€42</span>
-                            <span id="price-right" class="price-right pull-right" data-currency="€">€880</span>
+                            <span class="pull-left">
+                                $
+                                <span id="span-min-salary">
+                                    {{ $minSalary }}
+                                </span>
+                            </span>
+                            <span class="pull-right">
+                                $
+                                <span id="span-max-salary">
+                                    {{ $maxSalary }}
+                                </span>
+                            </span>
                             <div class="clearfix"></div>
                             <div id="sliderRefine"
                                  class="slider slider-rose noUi-target noUi-ltr noUi-horizontal"></div>
@@ -43,9 +55,10 @@
                             @foreach($arrCity as $city)
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="cities[]" value="{{ $city }}" data-toggle="checkbox"
-                                            @if(in_array($city, $searchCities))
-                                                checked
+                                        <input type="checkbox" name="cities[]" value="{{ $city }}"
+                                               data-toggle="checkbox"
+                                               @if(in_array($city, $searchCities, true))
+                                                   checked
                                             @endif
                                         >
                                         {{ $city }}
