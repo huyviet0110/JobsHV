@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Enums\FileTypeEnum;
+use App\Enums\PostRemotableEnum;
 use App\Enums\PostStatusEnum;
 use App\Models\Company;
 use App\Models\File;
@@ -17,14 +18,15 @@ class PostImport implements ToArray, WithHeadingRow
 {
     public function array(array $array): void
     {
-        try {
-            foreach ($array as $each) {
+        foreach ($array as $each) {
+            try {
+                $remotable = PostRemotableEnum::OFFICE_ONLY;
                 $companyName = $each['cong_ty'];
                 $language    = $each['ngon_ngu'];
                 $city        = $each['dia_diem'];
                 $link        = $each['link'];
 
-                if(!empty($companyName)){
+                if (!empty($companyName)) {
                     $companyId = Company::firstOrCreate([
                         'name' => $companyName,
                     ], [
@@ -34,9 +36,19 @@ class PostImport implements ToArray, WithHeadingRow
                     $companyId = null;
                 }
 
-                if(!empty($city)){
-                    $city = Str::replace('HN', 'Hà Nội', $city);
-                    $city = Str::replace('HCM', 'Hồ Chí Minh', $city);
+                if ($city === 'Nhiều') {
+                    $city = null;
+                } elseif ($city === 'Remote') {
+                    $city      = null;
+                    $remotable = PostRemotableEnum::REMOTE_ONLY;
+                } else {
+                    $city = Str::replace([
+                        'HN',
+                        'HCM',
+                    ], [
+                        'Hà Nội',
+                        'Hồ Chí Minh',
+                    ], $city);
                 }
 
                 $post = Post::create([
@@ -44,6 +56,7 @@ class PostImport implements ToArray, WithHeadingRow
                     'company_id' => $companyId,
                     'city'       => $city,
                     'status'     => PostStatusEnum::ADMIN_APPROVED,
+                    'remotable'  => $remotable,
                 ]);
 
                 $languages = explode(',', $language);
@@ -58,9 +71,9 @@ class PostImport implements ToArray, WithHeadingRow
                     'link'    => $link,
                     'type'    => FileTypeEnum::JD,
                 ]);
-            }
-        } catch (Throwable $e) {
+            } catch (Throwable $e) {
 
+            }
         }
     }
 }
