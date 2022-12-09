@@ -6,23 +6,6 @@
 				<div class="col-md-4">
 					<h5>About Us</h5>
 					<p>Creative Tim is a startup that creates design tools that make the web development process faster and easier. </p> <p>We love the web and care deeply for how users interact with a digital product. We power businesses and individuals to create better looking web projects around the world. </p>
-
-                    <ul>
-                        <li class="dropdown notification-list topbar-dropdown">
-                            <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
-                               aria-haspopup="false" aria-expanded="false">
-                                <img src="{{ asset('flags/us.svg') }}" alt="user-image" class="mr-0 mr-sm-1" height="12">
-                                <span class="align-middle d-none d-sm-inline-block">English</span>
-                                <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu" style="background-color: #232323">
-                                <a href="" class="dropdown-item notify-item">
-                                    <img src="{{ asset('flags/vn.svg') }}" alt="user-image" class="mr-1" height="12">
-                                    <span class="align-middle">Vietnamese</span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
 
 				<div class="col-md-4">

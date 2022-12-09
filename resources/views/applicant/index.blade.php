@@ -1,14 +1,53 @@
 @extends('layout_frontpage.master');
 @section('content')
-    <div class="col-md-9">
-        <div class="row">
-            @foreach ($posts as $post)
-                <x-post :post="$post"></x-post>
-            @endforeach
-        </div>
+    <h2 class="section-title">
+        {{ __('frontpage.title') }}
+    </h2>
+    <div class="row">
+        @include('layout_frontpage.sidebar')
+        <div class="col-md-9">
+            <div class="row">
+                @foreach ($posts as $post)
+                    <x-post :post="$post"></x-post>
+                @endforeach
+            </div>
 
-        <ul class="pagination pagination-info" style="float: right">
-            {{ $posts->links() }}
-        </ul>
+            <ul class="pagination pagination-info" style="float: right">
+                {{ $posts->links() }}
+            </ul>
+        </div>
     </div>
 @endsection
+@push('js')
+    <script type="text/javascript">
+		$(document).ready(function(){
+
+			var slider2 = document.getElementById('sliderRefine');
+
+			const minSalary = parseInt($("#input-min-salary").val());
+			const maxSalary = parseInt($("#input-max-salary").val());
+
+			noUiSlider.create(slider2, {
+				start: [minSalary, maxSalary],
+				connect: true,
+				step: 50,
+				range: {
+				   'min': [{{ $configs['filter_min_salary'] }} - 300],
+				   'max': [{{ $configs['filter_max_salary'] }} + 500]
+				}
+			});
+
+
+			slider2.noUiSlider.on('update', function( values, handle ){
+			    let val = Math.round(values[handle]);
+				if (handle){
+					$("#span-max-salary").text(val);
+					$("#input-max-salary").val(val);
+				} else {
+					$("#span-min-salary").text(val);
+					$("#input-min-salary").val(val);
+				}
+			});
+		});
+    </script>
+@endpush
