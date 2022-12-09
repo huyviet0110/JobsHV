@@ -20,7 +20,11 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        $roles = UserRoleEnum::getRolesForRegister();
+
+        return view('auth.register', [
+            'roles' => $roles,
+        ]);
     }
 
     public function callback($provider): RedirectResponse
@@ -35,7 +39,7 @@ class AuthController extends Controller
         if (is_null($user)) {
             $user        = new User();
             $user->email = $data->getEmail();
-            $user->role  = UserRoleEnum::ADMIN;
+            $user->role  = UserRoleEnum::APPLICANT;
             $checkExists = false;
         }
 
@@ -47,41 +51,39 @@ class AuthController extends Controller
 
         $role = getRoleByKey($user->role);
         if ($checkExists) {
-
             return redirect()->route("$role.index");
         }
 
-        return redirect()->route("$role.index");
-//        return redirect()->route('register');
+        return redirect()->route('register');
     }
 
-//    public function registering(RegisteringRequest $request): RedirectResponse
-//    {
-//        $password = Hash::make($request->get('password'));
-//        $role     = (int) $request->get('role');
-//
-//        if (auth()->check()) {
-//            User::query()
-//                ->where('id', auth()->user()->id)
-//                ->update([
-//                    'password' => $password,
-//                    'role'     => $role,
-//                ]);
-//        } else {
-//            $user = User::query()->Create([
-//                'email'    => $request->get('email'),
-//                'name'     => $request->get('name'),
-//                'password' => $password,
-//                'role'     => $role,
-//            ]);
-//
-//            Auth::login($user);
-//        }
-//
-//        $role = strtolower(UserRoleEnum::getKey($role));
-//
-//        return redirect()->route("$role.welcome");
-//    }
+    public function registering(RegisteringRequest $request): RedirectResponse
+    {
+        $password = Hash::make($request->get('password'));
+        $role     = (int) $request->get('role');
+
+        if (auth()->check()) {
+            User::query()
+                ->where('id', auth()->user()->id)
+                ->update([
+                    'password' => $password,
+                    'role'     => $role,
+                ]);
+        } else {
+            $user = User::query()->Create([
+                'email'    => $request->get('email'),
+                'name'     => $request->get('name'),
+                'password' => $password,
+                'role'     => $role,
+            ]);
+
+            Auth::login($user);
+        }
+
+        $role = strtolower(UserRoleEnum::getKey($role));
+
+        return redirect()->route("$role.index");
+    }
 
     public function logout(): RedirectResponse
     {

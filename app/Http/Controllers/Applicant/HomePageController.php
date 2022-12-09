@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Applicant;
 
+use App\Enums\PostStatusEnum;
 use App\Enums\SystemCacheKeyEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
@@ -23,7 +24,7 @@ class HomePageController extends Controller
         $minSalary    = $request->get('min_salary', $configs['filter_min_salary']);
         $maxSalary    = $request->get('max_salary', $configs['filter_max_salary']);
 
-        $query = Post::with([
+        $query = Post::query()->with([
             'languages',
             'company' => function ($q) {
                 return $q->select(
@@ -33,7 +34,7 @@ class HomePageController extends Controller
                 );
             },
         ])
-//            ->latest();
+            ->approved()
             ->orderByDesc('id');
 
         if (!empty($searchCities)) {
@@ -46,7 +47,7 @@ class HomePageController extends Controller
         }
 
         if ($request->has('min_salary')) {
-            $query->where(function ($q) use ($minSalary){
+            $query->where(function ($q) use ($minSalary) {
                 $q->orWhere('min_salary', '>=', $minSalary);
                 $q->orWhereNull('min_salary');
             });
@@ -68,6 +69,20 @@ class HomePageController extends Controller
             'configs'      => $configs,
             'minSalary'    => $minSalary,
             'maxSalary'    => $maxSalary,
+        ]);
+    }
+
+    public function show($postId)
+    {
+        $post = Post::query()
+            ->with([
+                'file',
+                'company',
+            ])
+            ->approved()
+            ->findOrFail($postId);
+        return view('applicant.show', [
+            'post' => $post,
         ]);
     }
 }
