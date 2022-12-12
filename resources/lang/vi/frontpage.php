@@ -11,5 +11,7 @@ return array (
   'remote_only' => 'Chỉ làm việc từ xa',
   'office_only' => 'Chỉ làm việc tại văn phòng',
   'hybrid' => 'Làm việc linh hoạt',
-  'all' => 'all',
+  'is_closed' => 'Hết hạn ứng tuyển',
+  'can_part_time' => 'Có thể làm bán thời gian',
+  'all' => 'Tất cả',
 );

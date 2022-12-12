@@ -11,5 +11,7 @@ return array (
   'remote_only' => 'Remote Only',
   'office_only' => 'Office Only',
   'hybrid' => 'Hybrid',
+  'is_closed' => 'This post has expired',
+  'can_part_time' => 'Can part-time',
   'all' => 'All',
 );
