@@ -7,6 +7,7 @@ use App\Enums\PostRemotableEnum;
 use App\Enums\PostStatusEnum;
 use App\Enums\SystemCacheKeyEnum;
 use App\Enums\UserRoleEnum;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -102,6 +103,11 @@ class Post extends Model
         "slug",
     ];
 
+    protected $casts = [
+        'start_date' => 'datetime:Y-m-d',
+        'end_date'   => 'datetime:Y-m-d',
+    ];
+
     protected static function booted()
     {
         static::creating(static function ($object) {
@@ -129,6 +135,15 @@ class Post extends Model
     public function scopeApproved($query)
     {
         return $query->where('status', PostStatusEnum::ADMIN_APPROVED);
+    }
+
+    public function getIsClosedAttribute(): bool
+    {
+        if (empty($this->start_date) || empty($this->end_date)) {
+            return false;
+        }
+
+        return !now()->between($this->start_date, $this->end_date);
     }
 
     public function sluggable(): array
