@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Applicant;
 
+use App\Enums\PostRemotableEnum;
 use App\Enums\PostStatusEnum;
 use App\Enums\SystemCacheKeyEnum;
 use App\Http\Controllers\Controller;
@@ -19,6 +20,8 @@ class HomePageController extends Controller
     public function index(Request $request)
     {
         $searchCities = $request->get('cities', []);
+        $remotable    = $request->get('remotable');
+        $is_part_time = $request->get('is_part_time', 0);
         $arrCity      = getAndCachePostCities();
         $configs      = Config::getAndCache(0);
         $minSalary    = $request->get('min_salary', $configs['filter_min_salary']);
@@ -35,6 +38,7 @@ class HomePageController extends Controller
             },
         ])
             ->approved()
+            ->orderByDesc('is_pinned')
             ->orderByDesc('id');
 
         if (!empty($searchCities)) {
@@ -44,6 +48,10 @@ class HomePageController extends Controller
                 }
                 $q->orWhereNull('city');
             });
+        }
+
+        if (!empty($is_part_time)) {
+            $query->where('is_part_time', $is_part_time);
         }
 
         if ($request->has('min_salary')) {
@@ -60,15 +68,24 @@ class HomePageController extends Controller
             });
         }
 
+        if (!empty($remotable)) {
+            $query->where('remotable', $remotable);
+        }
+
         $posts = $query->paginate();
 
+        $filtersPostRemotable = PostRemotableEnum::getArrLowerKey();
+
         return view('applicant.index', [
-            'posts'        => $posts,
-            'arrCity'      => $arrCity,
-            'searchCities' => $searchCities,
-            'configs'      => $configs,
-            'minSalary'    => $minSalary,
-            'maxSalary'    => $maxSalary,
+            'posts'                => $posts,
+            'arrCity'              => $arrCity,
+            'searchCities'         => $searchCities,
+            'filtersPostRemotable' => $filtersPostRemotable,
+            'remotable'            => $remotable,
+            'is_part_time'         => $is_part_time,
+            'configs'              => $configs,
+            'minSalary'            => $minSalary,
+            'maxSalary'            => $maxSalary,
         ]);
     }
 
