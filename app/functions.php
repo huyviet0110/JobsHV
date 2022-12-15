@@ -37,7 +37,7 @@ if(!function_exists('getAndCachePostCities')){
     {
         return cache()->remember(SystemCacheKeyEnum::POST_CITIES, (24 * 60 * 60) * 30, function () {
             $cities  = Post::query()
-                ->pluck('city')
+                ->value('city')
                 ->toArray();
             $arrCity = [];
             foreach ($cities as $city) {
