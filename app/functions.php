@@ -8,6 +8,7 @@ if(!function_exists('getRoleByKey')){
     function getRoleByKey($key): string
     {
         return strtolower(UserRoleEnum::getKey($key));
+        return strtolower(UserRoleEnum::getKey($key2));
     }
 }
 
