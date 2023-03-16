@@ -17,6 +17,8 @@ if(!function_exists('user')){
     function user(): ?object
     {
         return auth()->user();
+        dd(test_1);
+        
     }
 }
 
