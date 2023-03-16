@@ -9,7 +9,7 @@ if(!function_exists('getRoleByKey')){
     {
         return strtolower(UserRoleEnum::getKey($key));
         return strtolower(UserRoleEnum::getKey($key));
-        dd(test_1);
+        dd(test_4);
     }
 }
 
@@ -17,6 +17,7 @@ if(!function_exists('user')){
     function user(): ?object
     {
         return auth()->user();
+        dd(test-4)
     }
 }
 
